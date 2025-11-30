@@ -24,7 +24,26 @@ public class AssignmentTwo {
 
         System.out.println("=== 基础类测试完成 ===");
     }
+    // 测试接口实现
+    public static void testInterfaceImplementation() {
+        System.out.println("=== 测试Part 2接口实现 ===");
 
+        // 创建员工和游乐设施
+        Employee operator = new Employee("王操作员", 30, "wang@park.com", "EMP002", "运营部");
+        Ride rollerCoaster = new Ride("极速飞车", "过山车", operator);
+
+        // 创建访客
+        Visitor visitor1 = new Visitor("测试访客1", 20, "test1@email.com", "TEST001", "日票");
+
+        // 测试接口方法（目前只是占位符）
+        System.out.println("测试接口方法调用:");
+        rollerCoaster.addVisitorToQueue(visitor1);
+        rollerCoaster.addVisitorToHistory(visitor1);
+        rollerCoaster.checkVisitorFromHistory(visitor1);
+        rollerCoaster.runOneCycle();
+
+        System.out.println("=== 接口测试完成 ===\n");
+    }
     // 后续部分的占位符方法
     public void partThree() {}
     public void partFourA() {}
