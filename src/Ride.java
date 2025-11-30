@@ -5,19 +5,28 @@ public class Ride implements RideInterface {
     private String rideName;
     private String rideType;
     private Employee operator;
-
+    private int maxRider;
+    private int numOfCycles;
+    // Part 3: 添加队列集合
+    private Queue<Visitor> waitingQueue;
+    private LinkedList<Visitor> rideHistory;
     // 默认构造器
     public Ride() {
         this.rideName = "Unknown Ride";
         this.rideType = "General";
         this.operator = null;
+        this.maxRider = 1;
+        this.numOfCycles = 0;
+        this.waitingQueue = new LinkedList<>();
+        this.rideHistory = new LinkedList<>();
     }
 
     // 参数化构造器
-    public Ride(String rideName, String rideType, Employee operator) {
+    public Ride(String rideName, String rideType, Employee operator, int maxRider) {
         this.rideName = rideName;
         this.rideType = rideType;
         this.operator = operator;
+        this.maxRider = maxRider;
     }
 
     // Getter方法
@@ -32,7 +41,13 @@ public class Ride implements RideInterface {
     public Employee getOperator() {
         return operator;
     }
+    public int getMaxRider() {
+        return maxRider;
+    }
 
+    public int getNumOfCycles() {
+        return numOfCycles;
+    }
     // Setter方法
     public void setRideName(String rideName) {
         this.rideName = rideName;
@@ -45,20 +60,47 @@ public class Ride implements RideInterface {
     public void setOperator(Employee operator) {
         this.operator = operator;
     }
+    public void setMaxRider(int maxRider) {
+        this.maxRider = maxRider;
+    }
+    // === Part 3: 队列方法实现 ===
     @Override
     public void addVisitorToQueue(Visitor visitor) {
-        System.out.println("addVisitorToQueue方法待实现");
+        if (visitor != null) {
+            waitingQueue.add(visitor);
+            System.out.println(" 成功将访客 " + visitor.getName() + " 添加到等待队列");
+        } else {
+            System.out.println(" 添加失败：访客对象为空");
+        }
     }
 
     @Override
     public Visitor removeVisitorFromQueue() {
-        System.out.println("removeVisitorFromQueue方法待实现");
-        return null;
+        Visitor visitor = waitingQueue.poll();
+        if (visitor != null) {
+            System.out.println(" 成功从队列移除访客: " + visitor.getName());
+        } else {
+            System.out.println(" 队列为空，无法移除访客");
+        }
+        return visitor;
     }
 
     @Override
     public void printQueue() {
-        System.out.println("printQueue方法待实现");
+        if (waitingQueue.isEmpty()) {
+            System.out.println(" 等待队列为空");
+            return;
+        }
+
+        System.out.println("=== " + rideName + " 等待队列 ===");
+        int position = 1;
+        for (Visitor visitor : waitingQueue) {
+            System.out.println(position + ". " + visitor.getName() +
+                    " (ID: " + visitor.getVisitorId() +
+                    ", 票型: " + visitor.getTicketType() + ")");
+            position++;
+        }
+        System.out.println("总计: " + waitingQueue.size() + " 人在等待");
     }
 
     @Override
