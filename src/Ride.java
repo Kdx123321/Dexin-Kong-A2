@@ -25,12 +25,13 @@ public class Ride implements RideInterface {
         this.operator = null;
         this.maxRider = 1;
         this.numOfCycles = 0;
-        this.waitingQueue = new LinkedList<>();
-        this.rideHistory = new LinkedList<>();
+        this.waitingQueue = new LinkedList<>();    // 初始化队列
+        this.rideHistory = new LinkedList<>();     // 初始化链表
     }
 
-    // 参数化构造器
+    // 参数化构造器 - 修复：添加 this();
     public Ride(String rideName, String rideType, Employee operator, int maxRider) {
+        this();
         this.rideName = rideName;
         this.rideType = rideType;
         this.operator = operator;
