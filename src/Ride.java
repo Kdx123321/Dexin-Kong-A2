@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.File;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -254,5 +257,87 @@ public class Ride implements RideInterface {
         }
 
         System.out.println(" 文件导出完成 ===\n");
+    }
+    // === Part 7: 文件导入方法 ===
+    public void importRideHistory(String filename) {
+        System.out.println("\n === 开始从文件导入历史记录: " + filename + " ===");
+
+        File file = new File(filename);
+        if (!file.exists()) {
+            System.out.println(" 导入失败：文件不存在 - " + filename);
+            return;
+        }
+
+        if (!file.canRead()) {
+            System.out.println(" 导入失败：文件无法读取 - " + filename);
+            return;
+        }
+
+        int importedCount = 0;
+        int skippedCount = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            int lineNumber = 0;
+
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+
+                // 跳过空行和注释行
+                if (line.trim().isEmpty() || line.trim().startsWith("#")) {
+                    continue;
+                }
+
+                // 解析CSV行
+                try {
+                    String[] parts = line.split(",");
+                    if (parts.length == 5) {
+                        String name = parts[0].trim();
+                        int age = Integer.parseInt(parts[1].trim());
+                        String email = parts[2].trim();
+                        String visitorId = parts[3].trim();
+                        String ticketType = parts[4].trim();
+
+                        // 创建Visitor对象
+                        Visitor visitor = new Visitor(name, age, email, visitorId, ticketType);
+
+                        // 添加到历史记录（避免重复）
+                        if (!rideHistory.contains(visitor)) {
+                            rideHistory.add(visitor);
+                            importedCount++;
+                            System.out.println(" 导入访客: " + name + " (ID: " + visitorId + ")");
+                        } else {
+                            skippedCount++;
+                            System.out.println(" 跳过重复访客: " + name);
+                        }
+                    } else {
+                        System.out.println(" 第 " + lineNumber + " 行格式错误，跳过: " + line);
+                        skippedCount++;
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("  第 " + lineNumber + " 行年龄格式错误，跳过: " + line);
+                    skippedCount++;
+                } catch (Exception e) {
+                    System.out.println("  第 " + lineNumber + " 行解析错误，跳过: " + line);
+                    skippedCount++;
+                }
+            }
+
+            System.out.println(" 文件导入完成");
+            System.out.println(" 导入统计:");
+            System.out.println("   - 成功导入: " + importedCount + " 个访客");
+            System.out.println("   - 跳过记录: " + skippedCount + " 行");
+            System.out.println("   - 历史记录总数: " + rideHistory.size() + " 个访客");
+
+        } catch (IOException e) {
+            System.out.println(" 导入失败：文件读取错误 - " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(" 导入失败：发生未知错误 - " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        System.out.println(" 文件导入完成 ===\n");
     }
 }

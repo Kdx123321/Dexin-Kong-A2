@@ -16,6 +16,8 @@ public class AssignmentTwo {
         partFive();
         // 测试Part 6文件写入功能
         partSix();
+        // 测试Part 7文件读取功能
+        partSeven();
 }
     // 测试基础类的方法
     public static void testBasicClasses() {
@@ -239,6 +241,29 @@ public class AssignmentTwo {
         System.out.println("=== Part 6 演示完成 ===\n");
     }
 
-    // 后续部分的占位符方法
-    public void partSeven() {}
+    // === Part 7 演示方法 ===
+    public static void partSeven() {
+        System.out.println("📥 === Part 7 文件读取功能演示 ===");
+
+        // 创建新的游乐设施（空的历史记录）
+        Employee operator = new Employee("冯操作员", 34, "feng@park.com", "EMP008", "过山车部");
+        Ride newRide = new Ride("新建过山车", "过山车", operator, 4);
+
+        System.out.println("1. 导入前的历史记录状态:");
+        newRide.printRideHistory();
+        newRide.numberOfVisitors();
+
+        System.out.println("\n2. 从文件导入历史记录:");
+        String importFilename = "ride_history_export.csv";
+        newRide.importRideHistory(importFilename);
+
+        System.out.println("\n3. 导入后的历史记录状态:");
+        newRide.printRideHistory();
+        newRide.numberOfVisitors();
+
+        System.out.println("\n4. 测试导入不存在的文件:");
+        newRide.importRideHistory("nonexistent_file.csv");
+
+        System.out.println("=== Part 7 演示完成 ===\n");
+    }
 }
