@@ -9,6 +9,8 @@ public class AssignmentTwo {
 
     // 测试Part 3队列功能
     partThree();
+        // 测试Part 4A历史记录功能
+        partFourA();
 }
     // 测试基础类的方法
     public static void testBasicClasses() {
@@ -81,8 +83,42 @@ public class AssignmentTwo {
         System.out.println("=== Part 3 演示完成 ===\n");
     }
 
+    // === Part 4A 演示方法 ===
+    public static void partFourA() {
+        System.out.println("📋 === Part 4A 历史记录功能演示 ===");
+
+        // 创建员工和游乐设施
+        Employee operator = new Employee("孙操作员", 29, "sun@park.com", "EMP004", "水上设施部");
+        Ride waterRide = new Ride("激流勇进", "水上设施", operator, 4);
+
+        // 创建5个访客
+        Visitor visitor1 = new Visitor("刘一", 20, "liu@email.com", "V101", "日票");
+        Visitor visitor2 = new Visitor("陈二", 22, "chen@email.com", "V102", "季票");
+        Visitor visitor3 = new Visitor("张三", 25, "zhang3@email.com", "V103", "日票");
+        Visitor visitor4 = new Visitor("李四", 19, "li4@email.com", "V104", "学生票");
+        Visitor visitor5 = new Visitor("王五", 30, "wang5@email.com", "V105", "VIP票");
+
+        System.out.println("1. 添加5个访客到历史记录:");
+        waterRide.addVisitorToHistory(visitor1);
+        waterRide.addVisitorToHistory(visitor2);
+        waterRide.addVisitorToHistory(visitor3);
+        waterRide.addVisitorToHistory(visitor4);
+        waterRide.addVisitorToHistory(visitor5);
+
+        System.out.println("\n2. 检查访客是否在历史记录中:");
+        waterRide.checkVisitorFromHistory(visitor3);  // 应该在
+        waterRide.checkVisitorFromHistory(new Visitor("不存在的访客", 0, "none@email.com", "V999", "日票"));  // 应该不在
+
+        System.out.println("\n3. 打印历史记录中的访客数量:");
+        waterRide.numberOfVisitors();
+
+        System.out.println("\n4. 打印完整的历史记录（使用Iterator）:");
+        waterRide.printRideHistory();
+
+        System.out.println("=== Part 4A 演示完成 ===\n");
+    }
+
     // 后续部分的占位符方法
-    public void partFourA() {}
     public void partFourB() {}
     public void partFive() {}
     public void partSix() {}

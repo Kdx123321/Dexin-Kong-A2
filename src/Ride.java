@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Iterator;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -103,26 +104,63 @@ public class Ride implements RideInterface {
         System.out.println("总计: " + waitingQueue.size() + " 人在等待");
     }
 
+    // === Part 4A: 历史记录方法实现 ===
     @Override
     public void addVisitorToHistory(Visitor visitor) {
-        System.out.println("addVisitorToHistory方法待实现");
+        if (visitor != null) {
+            if (!rideHistory.contains(visitor)) {
+                rideHistory.add(visitor);
+                System.out.println("✅ 成功将访客 " + visitor.getName() + " 添加到游乐设施历史记录");
+            } else {
+                System.out.println("ℹ️  访客 " + visitor.getName() + " 已在历史记录中");
+            }
+        } else {
+            System.out.println("❌ 添加失败：访客对象为空");
+        }
     }
 
     @Override
     public boolean checkVisitorFromHistory(Visitor visitor) {
-        System.out.println("checkVisitorFromHistory方法待实现");
-        return false;
+        if (visitor != null) {
+            boolean exists = rideHistory.contains(visitor);
+            if (exists) {
+                System.out.println("✅ 访客 " + visitor.getName() + " 在历史记录中");
+            } else {
+                System.out.println("❌ 访客 " + visitor.getName() + " 不在历史记录中");
+            }
+            return exists;
+        } else {
+            System.out.println("❌ 检查失败：访客对象为空");
+            return false;
+        }
     }
 
     @Override
     public int numberOfVisitors() {
-        System.out.println("numberOfVisitors方法待实现");
-        return 0;
+        int count = rideHistory.size();
+        System.out.println("📊 历史记录中总共有 " + count + " 个访客");
+        return count;
     }
 
     @Override
     public void printRideHistory() {
-        System.out.println("printRideHistory方法待实现");
+        if (rideHistory.isEmpty()) {
+            System.out.println("📝 游乐设施历史记录为空");
+            return;
+        }
+
+        System.out.println("=== 📋 " + rideName + " 游乐设施历史记录 ===");
+        Iterator<Visitor> iterator = rideHistory.iterator();  // 使用Iterator
+        int position = 1;
+        while (iterator.hasNext()) {
+            Visitor visitor = iterator.next();
+            System.out.println(position + ". " + visitor.getName() +
+                    " (ID: " + visitor.getVisitorId() +
+                    ", 年龄: " + visitor.getAge() +
+                    ", 票型: " + visitor.getTicketType() + ")");
+            position++;
+        }
+        System.out.println("总计: " + rideHistory.size() + " 个访客体验过此设施");
     }
 
     @Override
