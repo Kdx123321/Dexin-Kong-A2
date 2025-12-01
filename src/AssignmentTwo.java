@@ -11,6 +11,8 @@ public class AssignmentTwo {
     partThree();
         // 测试Part 4A历史记录功能
         partFourA();
+        // 测试Part 4B排序功能
+        partFourB();
 }
     // 测试基础类的方法
     public static void testBasicClasses() {
@@ -118,8 +120,41 @@ public class AssignmentTwo {
         System.out.println("=== Part 4A 演示完成 ===\n");
     }
 
+    // === Part 4B 演示方法 ===
+    public static void partFourB() {
+        System.out.println("🔢 === Part 4B 排序功能演示 ===");
+
+        // 创建员工和游乐设施
+        Employee operator = new Employee("周操作员", 27, "zhou@park.com", "EMP005", "旋转设施部");
+        Ride ferrisWheel = new Ride("摩天轮", "观景设施", operator, 6);
+
+        // 创建5个访客
+        Visitor visitor1 = new Visitor("王五", 30, "wang5@email.com", "V201", "VIP票");
+        Visitor visitor2 = new Visitor("张三", 25, "zhang3@email.com", "V202", "日票");
+        Visitor visitor3 = new Visitor("李四", 19, "li4@email.com", "V203", "学生票");
+        Visitor visitor4 = new Visitor("陈二", 22, "chen2@email.com", "V204", "季票");
+        Visitor visitor5 = new Visitor("刘一", 20, "liu1@email.com", "V205", "日票");
+
+        System.out.println("1. 添加5个访客到历史记录:");
+        ferrisWheel.addVisitorToHistory(visitor1);
+        ferrisWheel.addVisitorToHistory(visitor2);
+        ferrisWheel.addVisitorToHistory(visitor3);
+        ferrisWheel.addVisitorToHistory(visitor4);
+        ferrisWheel.addVisitorToHistory(visitor5);
+
+        System.out.println("\n2. 打印排序前的历史记录:");
+        ferrisWheel.printRideHistory();
+
+        System.out.println("\n3. 对历史记录进行排序:");
+        ferrisWheel.sortRideHistory();
+
+        System.out.println("\n4. 打印排序后的历史记录:");
+        ferrisWheel.printRideHistory();
+
+        System.out.println("=== Part 4B 演示完成 ===\n");
+    }
+
     // 后续部分的占位符方法
-    public void partFourB() {}
     public void partFive() {}
     public void partSix() {}
     public void partSeven() {}

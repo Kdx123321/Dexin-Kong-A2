@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Iterator;
+import java.util.Collections;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -8,6 +9,7 @@ public class Ride implements RideInterface {
     private Employee operator;
     private int maxRider;
     private int numOfCycles;
+
     // Part 3: 添加队列集合
     private Queue<Visitor> waitingQueue;
     private LinkedList<Visitor> rideHistory;
@@ -162,11 +164,20 @@ public class Ride implements RideInterface {
         }
         System.out.println("总计: " + rideHistory.size() + " 个访客体验过此设施");
     }
+    // === Part 4B: 排序方法 ===
+    public void sortRideHistory() {
+        if (rideHistory.isEmpty()) {
+            System.out.println("📝 历史记录为空，无需排序");
+            return;
+        }
+
+        System.out.println("🔄 正在对历史记录进行排序...");
+        Collections.sort(rideHistory, new VisitorComparator());
+        System.out.println("✅ 历史记录排序完成");
+    }
 
     @Override
     public void runOneCycle() {
         System.out.println("runOneCycle方法待实现");
     }
 }
-
-
