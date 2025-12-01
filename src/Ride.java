@@ -2,6 +2,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Iterator;
 import java.util.Collections;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -9,7 +12,6 @@ public class Ride implements RideInterface {
     private Employee operator;
     private int maxRider;
     private int numOfCycles;
-
     // Part 3: 添加队列集合
     private Queue<Visitor> waitingQueue;
     private LinkedList<Visitor> rideHistory;
@@ -212,5 +214,45 @@ public class Ride implements RideInterface {
         // 显示剩余等待人数
         System.out.println(" 剩余等待访客：" + waitingQueue.size() + " 人");
         System.out.println(" " + rideName + " 周期运行完成 ===\n");
+    }
+    // === Part 6: 文件导出方法 ===
+    public void exportRideHistory(String filename) {
+        System.out.println("\n === 开始导出历史记录到文件: " + filename + " ===");
+
+        if (rideHistory.isEmpty()) {
+            System.out.println(" 导出失败：历史记录为空，没有数据可导出");
+            return;
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            // 写入文件头（可选）
+            writer.println("# " + rideName + " 历史记录导出");
+            writer.println("# 导出时间: " + java.time.LocalDateTime.now());
+            writer.println("# 总访客数: " + rideHistory.size());
+            writer.println("# 格式: 姓名,年龄,邮箱,访客ID,票型");
+
+            // 写入每个访客的数据
+            for (Visitor visitor : rideHistory) {
+                String line = String.format("%s,%d,%s,%s,%s",
+                        visitor.getName(),
+                        visitor.getAge(),
+                        visitor.getEmail(),
+                        visitor.getVisitorId(),
+                        visitor.getTicketType());
+                writer.println(line);
+            }
+
+            System.out.println(" 成功导出 " + rideHistory.size() + " 个访客记录到文件: " + filename);
+            System.out.println(" 文件路径: " + new java.io.File(filename).getAbsolutePath());
+
+        } catch (IOException e) {
+            System.out.println(" 导出失败：文件写入错误 - " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(" 导出失败：发生未知错误 - " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        System.out.println(" 文件导出完成 ===\n");
     }
 }

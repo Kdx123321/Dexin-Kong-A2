@@ -6,7 +6,6 @@ public class AssignmentTwo {
         testBasicClasses();
     // 测试Part 2接口功能
     testInterfaceImplementation();
-
     // 测试Part 3队列功能
     partThree();
         // 测试Part 4A历史记录功能
@@ -15,6 +14,8 @@ public class AssignmentTwo {
         partFourB();
         // 测试Part 5运行周期功能
         partFive();
+        // 测试Part 6文件写入功能
+        partSix();
 }
     // 测试基础类的方法
     public static void testBasicClasses() {
@@ -202,8 +203,42 @@ public class AssignmentTwo {
 
         System.out.println("=== Part 5 演示完成 ===\n");
     }
+    // === Part 6 演示方法 ===
+    public static void partSix() {
+        System.out.println("=== Part 6 文件写入功能演示 ===");
+
+        // 创建员工和游乐设施
+        Employee operator = new Employee("郑操作员", 33, "zheng@park.com", "EMP007", "过山车部");
+        Ride rollerCoaster = new Ride("云霄飞车", "过山车", operator, 4);
+
+        // 创建5个访客并添加到历史记录
+        System.out.println("1. 创建5个访客并添加到历史记录:");
+        Visitor visitor1 = new Visitor("导出访客1", 21, "export1@email.com", "EX001", "日票");
+        Visitor visitor2 = new Visitor("导出访客2", 24, "export2@email.com", "EX002", "季票");
+        Visitor visitor3 = new Visitor("导出访客3", 27, "export3@email.com", "EX003", "VIP票");
+        Visitor visitor4 = new Visitor("导出访客4", 19, "export4@email.com", "EX004", "学生票");
+        Visitor visitor5 = new Visitor("导出访客5", 32, "export5@email.com", "EX005", "日票");
+
+        rollerCoaster.addVisitorToHistory(visitor1);
+        rollerCoaster.addVisitorToHistory(visitor2);
+        rollerCoaster.addVisitorToHistory(visitor3);
+        rollerCoaster.addVisitorToHistory(visitor4);
+        rollerCoaster.addVisitorToHistory(visitor5);
+
+        System.out.println("\n2. 打印历史记录内容:");
+        rollerCoaster.printRideHistory();
+
+        System.out.println("\n3. 导出历史记录到文件:");
+        String filename = "ride_history_export.csv";
+        rollerCoaster.exportRideHistory(filename);
+
+        System.out.println("\n4. 测试空历史记录导出:");
+        Ride emptyRide = new Ride("空设施", "测试设施", operator, 2);
+        emptyRide.exportRideHistory("empty_history.csv");
+
+        System.out.println("=== Part 6 演示完成 ===\n");
+    }
 
     // 后续部分的占位符方法
-    public void partSix() {}
     public void partSeven() {}
 }
