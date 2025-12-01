@@ -167,17 +167,50 @@ public class Ride implements RideInterface {
     // === Part 4B: 排序方法 ===
     public void sortRideHistory() {
         if (rideHistory.isEmpty()) {
-            System.out.println("📝 历史记录为空，无需排序");
+            System.out.println(" 历史记录为空，无需排序");
             return;
         }
 
-        System.out.println("🔄 正在对历史记录进行排序...");
+        System.out.println(" 正在对历史记录进行排序...");
         Collections.sort(rideHistory, new VisitorComparator());
-        System.out.println("✅ 历史记录排序完成");
+        System.out.println(" 历史记录排序完成");
     }
-
+    // === Part 5: 运行游乐设施周期 ===
     @Override
     public void runOneCycle() {
-        System.out.println("runOneCycle方法待实现");
+        System.out.println("\n === 开始运行 " + rideName + " 的一个周期 ===");
+
+        // 检查是否有操作员
+        if (operator == null) {
+            System.out.println(" 运行失败：没有分配操作员！");
+            return;
+        }
+
+        // 检查等待队列是否为空
+        if (waitingQueue.isEmpty()) {
+            System.out.println(" 运行失败：等待队列为空，没有访客可以乘坐！");
+            return;
+        }
+
+        // 计算本次可以乘坐的访客数量
+        int ridersThisCycle = Math.min(maxRider, waitingQueue.size());
+        System.out.println(" 本次周期可以乘坐 " + ridersThisCycle + " 个访客");
+
+        // 从队列中移除访客并添加到历史记录
+        for (int i = 0; i < ridersThisCycle; i++) {
+            Visitor rider = waitingQueue.poll();
+            if (rider != null) {
+                rideHistory.add(rider);
+                System.out.println(" 访客 " + rider.getName() + " 已完成乘坐并添加到历史记录");
+            }
+        }
+
+        // 更新周期计数
+        numOfCycles++;
+        System.out.println(" 周期计数更新：第 " + numOfCycles + " 次运行完成");
+
+        // 显示剩余等待人数
+        System.out.println(" 剩余等待访客：" + waitingQueue.size() + " 人");
+        System.out.println(" " + rideName + " 周期运行完成 ===\n");
     }
 }

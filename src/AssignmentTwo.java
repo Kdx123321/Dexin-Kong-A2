@@ -13,6 +13,8 @@ public class AssignmentTwo {
         partFourA();
         // 测试Part 4B排序功能
         partFourB();
+        // 测试Part 5运行周期功能
+        partFive();
 }
     // 测试基础类的方法
     public static void testBasicClasses() {
@@ -153,9 +155,55 @@ public class AssignmentTwo {
 
         System.out.println("=== Part 4B 演示完成 ===\n");
     }
+    // === Part 5 演示方法 ===
+    public static void partFive() {
+        System.out.println(" === Part 5 运行游乐设施周期演示 ===");
+
+        // 创建员工和游乐设施（maxRider = 3）
+        Employee operator = new Employee("吴操作员", 31, "wu@park.com", "EMP006", "过山车部");
+        Ride rollerCoaster = new Ride("超级过山车", "过山车", operator, 3);
+
+        // 创建10个访客
+        System.out.println("1. 创建10个访客并添加到等待队列:");
+        for (int i = 1; i <= 10; i++) {
+            Visitor visitor = new Visitor("访客" + i, 20 + i, "visitor" + i + "@email.com",
+                    "V" + (300 + i), i % 2 == 0 ? "日票" : "季票");
+            rollerCoaster.addVisitorToQueue(visitor);
+        }
+
+        System.out.println("\n2. 打印运行前的等待队列:");
+        rollerCoaster.printQueue();
+
+        System.out.println("\n3. 运行第一个周期（maxRider = 3）:");
+        rollerCoaster.runOneCycle();
+
+        System.out.println("\n4. 打印运行后的等待队列:");
+        rollerCoaster.printQueue();
+
+        System.out.println("\n5. 打印历史记录（刚刚乘坐的3个访客）:");
+        rollerCoaster.printRideHistory();
+
+        System.out.println("\n6. 运行第二个周期:");
+        rollerCoaster.runOneCycle();
+
+        System.out.println("\n7. 打印第二次运行后的等待队列:");
+        rollerCoaster.printQueue();
+
+        System.out.println("\n8. 打印完整的历史记录（总共6个访客）:");
+        rollerCoaster.printRideHistory();
+
+        System.out.println("\n9. 测试无操作员情况:");
+        Ride noOperatorRide = new Ride("无人设施", "测试设施", null, 2);
+        noOperatorRide.runOneCycle();
+
+        System.out.println("\n10. 测试空队列情况:");
+        Ride emptyRide = new Ride("空队列设施", "测试设施", operator, 2);
+        emptyRide.runOneCycle();
+
+        System.out.println("=== Part 5 演示完成 ===\n");
+    }
 
     // 后续部分的占位符方法
-    public void partFive() {}
     public void partSix() {}
     public void partSeven() {}
 }
